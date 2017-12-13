@@ -38,3 +38,4 @@ After reboot, you should see something like this in dmesg output:
 [    2.811035] i2c i2c-3: Added multiplexed i2c bus 10
 [    2.812586] i2c i2c-3: Added multiplexed i2c bus 11
 [    2.812604] pca954x 3-0070: registered 8 multiplexed busses for I2C switch pca9548
+
