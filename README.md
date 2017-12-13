@@ -1,7 +1,9 @@
 # GPIO-pca9548
-Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi 
-Only looks on a GPIO software I2C bus for the mux.
-Adds additional bus entries in /dev:
+Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi
+
+The standard overlayonly looks on a GPIO software I2C bus for the mux.
+
+This overlay adds additional bus entries in /dev for the mux channels
 
 /dev/i2c-3   This is the software GPIO i2c bus
 
