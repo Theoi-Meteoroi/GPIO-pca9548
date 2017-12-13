@@ -8,9 +8,9 @@ This overlay adds additional bus entries in /dev for the mux channels
 
 /dev/i2c-3   This is the software GPIO i2c bus
 
-/dev/i2c-4   This is the first mux i2c channel
+/dev/i2c-4    This is the first mux i2c channel
 
-/dev/i2c-5   This is the second mux i2c channel
+/dev/i2c-5    This is the second mux i2c channel
 
 ..   (other channels)
 
