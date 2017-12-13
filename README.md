@@ -7,7 +7,7 @@ Adds additional bus entries in /dev:
 
 /dev/i2c-4   This is the first mux i2c channel
 
-/dev/i2c-5   this is the second mux i2c channel
+/dev/i2c-5   This is the second mux i2c channel
 
 ..   (other channels)
 
