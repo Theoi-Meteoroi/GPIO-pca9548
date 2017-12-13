@@ -49,3 +49,8 @@ After reboot, you should see something like this in dmesg output:
 
 [    2.812604] pca954x 3-0070: registered 8 multiplexed busses for I2C switch pca9548
 
+
+This is with the default i2c address of 0x70.  You can pass another address in the declaration:
+
+dtoverlay=i2c_gpio-pca9548,addr=0x71
+
