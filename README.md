@@ -4,7 +4,9 @@ Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi
 
 The standard overlay only looks on the hardware ARM I2C bus for the mux.
 
-This overlay adds additional bus entries in /dev for the mux channels. You can check for new devices with 'sudo i2cdetect -y <bus number>' 
+This overlay adds additional bus entries in /dev for the mux channels. 
+
+You can check for new devices with 'sudo i2cdetect -y <bus number>' 
 
 /dev/i2c-3   This is the software GPIO i2c bus
 
