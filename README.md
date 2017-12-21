@@ -6,7 +6,10 @@ The standard overlay only looks on the hardware ARM I2C bus for the mux.
 
 This overlay adds additional bus entries in /dev for the mux channels. 
 
-You can check for new devices with 'sudo i2cdetect -y <bus number>' 
+You can check for new devices with 'sudo i2cdetect -y BUS' 
+
+You should be able to access devices with any code that can use the /dev/i2c-X device to address
+i2c devices on that bus. The RESET line would need code and a GPIO pin to clear hung devices.
 
 /dev/i2c-3   This is the software GPIO i2c bus
 
