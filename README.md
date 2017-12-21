@@ -2,9 +2,9 @@
 
 Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi
 
-The standard overlay only looks on a GPIO software I2C bus for the mux.
+The standard overlay only looks on the hardware ARM I2C bus for the mux.
 
-This overlay adds additional bus entries in /dev for the mux channels
+This overlay adds additional bus entries in /dev for the mux channels. You can check for new devices with 'sudo i2cdetect -y <bus number>' 
 
 /dev/i2c-3   This is the software GPIO i2c bus
 
@@ -18,7 +18,7 @@ To Install -
 
 sudo dtc -I dts -O dtb -@ -o /boot/overlays/i2c_gpio-pca9548.dtbo i2c_gpio-pca9548.dts
 
-In /boot/config.txt add these two lines
+In /boot/config.txt add these two lines. You can use other suitable GPIO pins for SCL and SDA (tested)
 
 dtoverlay=i2c-gpio,i2c_gpio_sda=23,i2c_gpio_scl=24,i2c_gpio_delay_us=4
 
