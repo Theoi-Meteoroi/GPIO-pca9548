@@ -59,3 +59,32 @@ This is with the default i2c address of 0x70.  You can pass another address in t
 
 dtoverlay=i2c_gpio-pca9548,addr=0x71
 
+
+
+User friendly install instructions:
+
+1. Obtain the source and build a dtbo
+----
+cd ~
+wget https://github.com/Theoi-Meteoroi/GPIO-pca9548/blob/master/i2c_gpio-pca9548.dts
+
+sudo dtc -I dts -O dtb -@ -o /boot/overlays/i2c_gpio-pca9548.dtbo ./i2c_gpio-pca9548.dts
+----
+2. Now, edit /boot/config.txt with the following command:
+----
+vi /boot/config.txt
+----
+ 3. Go to the end of the file and add the following two lines:
+----
+dtoverlay=i2c-gpio,i2c_gpio_sda=23,i2c_gpio_scl=24,i2c_gpio_delay_us=4
+dtoverlay=i2c_gpio-pca9548
+----
+ 4. SAVE your edits in vi, exit vi. 
+
+
+You will need to have your multiplexer connected with SDA on pin 23 and SCL on pin 24.  Use the +3.3v to power the pca9548.  Add a 10uf tantalum capacitor near the device if possible to provide for transient spikes. Remember to tie the /RESET pin to +3.3v either directly or through a pull-up resistor.  The GPIO lines also need a nominal pull-up to 3.3v. 4.7k ohm seems to work well.  Address lines should also be connected to GND or +3.3v, either directly or through a pull-up resistor (10k or so is fine.)
+
+If you have it properly connected and powered, after rebooting you will have several new I2C buses available for use, one for each channel of the multiplexer. You can verify the buses are available by going to the Config -> System Information page of Mycodo and viewing the I2C buses. If there's only one, there is an issue. If you see 9 buses (1 from the original bus + 8 new buses from the multiplexer), then everything is working and you can begin connecting devices to your multiplexer channels.
+
+
+
