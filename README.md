@@ -1,15 +1,15 @@
 # GPIO-pca9548
 
-Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi
+Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi. Tested most recently with Raspbian Stretch.
 
-The standard overlay only looks on the hardware ARM I2C bus for the mux.
+The standard overlay only looks on the hardware ARM I2C bus for the mux. This overlay adds additional bus entries in /dev for the mux channels on a software (GPIO) I2C bus configured by the install script:
 
-This overlay adds additional bus entries in /dev for the mux channels. 
+### i2c-gpio i2c@0: using pins 23 (SDA) and 24 (SCL)
+
 
 You can check for new devices with 'sudo i2cdetect -y BUS' 
 
-You should be able to access devices with any code that can use the /dev/i2c-X device to address
-i2c devices on that bus. The RESET line would need code and a GPIO pin to clear hung devices.
+You should be able to access devices with any code that can use the /dev/i2c-X device to address i2c devices on that bus. The RESET line on the PCA9548 would need code and a GPIO pin to clear hung devices. Reset cannot be implemented in the overlay.
 
 /dev/i2c-3   This is the software GPIO i2c bus
 
@@ -19,16 +19,17 @@ i2c devices on that bus. The RESET line would need code and a GPIO pin to clear 
 
 ..   (other channels)
 
-To Install - 
+## To Install with the defaults. This is the best method if you don't want to manually edit files.
 
-sudo dtc -I dts -O dtb -@ -o /boot/overlays/i2c_gpio-pca9548.dtbo i2c_gpio-pca9548.dts
-
-In /boot/config.txt add these two lines. You can use other suitable GPIO pins for SCL and SDA (tested)
-
-dtoverlay=i2c-gpio,i2c_gpio_sda=23,i2c_gpio_scl=24,i2c_gpio_delay_us=4
-
-dtoverlay=i2c_gpio-pca9548
-
+### Step 1 - Download the install script
+---
+wget https://raw.githubusercontent.com/Theoi-Meteoroi/GPIO-pca9548/master/mux-install.sh
+---
+### Step 2 - Run the install script
+---
+/bin/bash mux-install.sh
+---
+### Step 3 -  Reboot
 
 After reboot, you should see something like this in dmesg output:
 
@@ -61,26 +62,27 @@ dtoverlay=i2c_gpio-pca9548,addr=0x71
 
 
 
-User friendly install instructions:
+## Manual install instructions:
 
-1. Change directory to /home/pi and copy the source and build a dtbo 
-----
+### 1. Change directory to /home/pi and copy the source and build a dtbo 
+---
 cd ~
-----
+
 wget https://raw.githubusercontent.com/Theoi-Meteoroi/GPIO-pca9548/master/i2c_gpio-pca9548.dts
-----
+
 sudo dtc -I dts -O dtb -@ -o /boot/overlays/i2c_gpio-pca9548.dtbo ./i2c_gpio-pca9548.dts
-----
-2. Now, edit /boot/config.txt with the following command:
-----
+---
+### 2. Now, edit /boot/config.txt with the following command:
+
 vi /boot/config.txt
-----
- 3. Go to the end of the file and add the following two lines:
-----
+
+### 3. Go to the end of the file and add the following two lines:
+
+---
 dtoverlay=i2c-gpio,i2c_gpio_sda=23,i2c_gpio_scl=24,i2c_gpio_delay_us=4
 dtoverlay=i2c_gpio-pca9548
-----
- 4. SAVE your edits in vi, exit vi. 
+---
+### 4. SAVE your edits in vi, exit vi. 
 
 
 You will need to have your multiplexer connected with SDA on pin 23 and SCL on pin 24.  Use the +3.3v to power the pca9548.  Add a 10uf tantalum capacitor near the device if possible to provide for transient spikes. Remember to tie the /RESET pin to +3.3v either directly or through a pull-up resistor.  The GPIO lines also need a nominal pull-up to 3.3v. 4.7k ohm seems to work well.  Address lines should also be connected to GND or +3.3v, either directly or through a pull-up resistor (10k or so is fine.)
