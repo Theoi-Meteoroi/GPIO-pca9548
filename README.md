@@ -1,6 +1,6 @@
 # GPIO-pca9548
 
-Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi. Tested most recently with Raspbian Stretch.
+Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi. Tested most recently with Raspbian Stretch. This is most useful for devices that are SMbus compliant (<=100khz clock) or have fixed addresses that prevent using more than one on the same bus. This is also a good work-around on the Raspberry Pi for the clock-stretching bug that some devices (AM2315 for instance) misbehave with the clock artifacts from the hardware ARM I2c bus. Control the clock speed by modifying the delay ( i2c_gpio_delay_us )
 
 The standard overlay only looks on the hardware ARM I2C bus for the mux. This overlay adds additional bus entries in /dev for the mux channels on a software (GPIO) I2C bus configured by the install script:
 
