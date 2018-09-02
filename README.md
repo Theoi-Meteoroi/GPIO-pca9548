@@ -70,14 +70,16 @@ You should be able to access devices with any code that can use the /dev/i2c-X d
 ## To Install with the defaults. 
 ## This is the best method if you don't want to manually edit files.
 
-### Step 1 - Download the install script
----
-wget https://raw.githubusercontent.com/Theoi-Meteoroi/GPIO-pca9548/master/mux-install.sh
----
+### Step 1 - Change to /home/pi and Download the install script
+
+pi@raspberry:~ cd ~
+
+pi@raspberry:~ wget https://raw.githubusercontent.com/Theoi-Meteoroi/GPIO-pca9548/master/mux-install.sh
+
 ### Step 2 - Run the install script
----
-/bin/bash mux-install.sh
----
+
+pi@raspberry:~ /bin/bash mux-install.sh
+
 ### Step 3 -  Reboot
 
 After reboot, you should see something like this in dmesg output:
