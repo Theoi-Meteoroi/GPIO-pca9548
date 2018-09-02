@@ -66,13 +66,13 @@ dtoverlay=i2c_gpio-pca9548,addr=0x71
 ## Manual install instructions:
 
 ### 1. Change directory to /home/pi and copy the source and build a dtbo 
----
+
 cd ~
 
 wget https://raw.githubusercontent.com/Theoi-Meteoroi/GPIO-pca9548/master/i2c_gpio-pca9548.dts
 
 sudo dtc -I dts -O dtb -@ -o /boot/overlays/i2c_gpio-pca9548.dtbo ./i2c_gpio-pca9548.dts
----
+
 ### 2. Now, edit /boot/config.txt with the following command:
 
 vi /boot/config.txt
