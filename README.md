@@ -19,7 +19,8 @@ You should be able to access devices with any code that can use the /dev/i2c-X d
 
 ..   (other channels)
 
-## To Install with the defaults. This is the best method if you don't want to manually edit files.
+## To Install with the defaults. 
+## This is the best method if you don't want to manually edit files.
 
 ### Step 1 - Download the install script
 ---
