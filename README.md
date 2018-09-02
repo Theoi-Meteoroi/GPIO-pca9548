@@ -1,13 +1,56 @@
 # GPIO-pca9548
 
-Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi. Tested most recently with Raspbian Stretch. This is most useful for devices that are SMbus compliant (<=100khz clock) or have fixed addresses that prevent using more than one on the same bus. This is also a good work-around on the Raspberry Pi for the clock-stretching bug that some devices (AM2315 for instance) misbehave with the clock artifacts from the hardware ARM I2c bus. Control the clock speed by modifying the delay ( i2c_gpio_delay_us )
+Adapt PCA9548 mux to GPIO I2C bus for Raspberry Pi. Tested most recently with Raspbian Stretch. This is most useful for devices that are SMbus compliant (<=100khz clock) or have fixed addresses that prevent using more than one on the same bus. This is also a good work-around on the Raspberry Pi for the clock-stretching bug that some devices (AM2315 for instance) misbehave with the clock artifacts from the hardware ARM I2c bus. Control the clock speed by modifying the delay ( i2c_gpio_delay_us ).  This software bus provides some additional SMbus support.
+
+I2C-ARM
+
+pi@raspberry:~ $ sudo i2cdetect -F 1
+Functionalities implemented by /dev/i2c-1:
+I2C                              yes
+SMBus Quick Command              yes
+SMBus Send Byte                  yes
+SMBus Receive Byte               yes
+SMBus Write Byte                 yes
+SMBus Read Byte                  yes
+SMBus Write Word                 yes
+SMBus Read Word                  yes
+SMBus Process Call               yes
+SMBus Block Write                yes
+SMBus Block Read                 no
+SMBus Block Process Call         no
+SMBus PEC                        yes
+I2C Block Write                  yes
+I2C Block Read                   yes
+
+Software-I2C
+
+pi@raspberry:~ $ sudo i2cdetect -F 3
+Functionalities implemented by /dev/i2c-3:
+I2C                              yes
+SMBus Quick Command              yes
+SMBus Send Byte                  yes
+SMBus Receive Byte               yes
+SMBus Write Byte                 yes
+SMBus Read Byte                  yes
+SMBus Write Word                 yes
+SMBus Read Word                  yes
+SMBus Process Call               yes
+SMBus Block Write                yes
+SMBus Block Read                 yes
+SMBus Block Process Call         yes
+SMBus PEC                        yes
+I2C Block Write                  yes
+I2C Block Read                   yes
+
+
 
 The standard overlay only looks on the hardware ARM I2C bus for the mux. This overlay adds additional bus entries in /dev for the mux channels on a software (GPIO) I2C bus configured by the install script:
 
 ### i2c-gpio i2c@0: using pins 23 (SDA) and 24 (SCL)
 
 
-You can check for new devices with 'sudo i2cdetect -y BUS' 
+You can check for new devices with 'sudo i2cdetect -y BUS' ( BUS is an integer for the bus to scan )
+
 
 You should be able to access devices with any code that can use the /dev/i2c-X device to address i2c devices on that bus. The RESET line on the PCA9548 would need code and a GPIO pin to clear hung devices. Reset cannot be implemented in the overlay.
 
@@ -60,6 +103,13 @@ After reboot, you should see something like this in dmesg output:
 This is with the default i2c address of 0x70.  You can pass another address in the declaration:
 
 dtoverlay=i2c_gpio-pca9548,addr=0x71
+
+
+You can also list out the configured I2C bus instances with
+
+### pi@raspberry:~ sudo i2cdetect -l
+
+
 
 
 
