@@ -146,10 +146,14 @@ dtoverlay=i2c_gpio-pca9548
 ---
 ### 4. SAVE your edits in vi, exit vi. 
 
+# Build your own or buy
 
 You will need to have your multiplexer connected with SDA on pin 23 and SCL on pin 24.  Use the +3.3v to power the pca9548.  Add a 10uf tantalum capacitor near the device if possible to provide for transient spikes. Remember to tie the /RESET pin to +3.3v either directly or through a pull-up resistor.  The GPIO lines also need a nominal pull-up to 3.3v. 4.7k ohm seems to work well.  Address lines should also be connected to GND or +3.3v, either directly or through a pull-up resistor (10k or so is fine.)
 
 If you have it properly connected and powered, after rebooting you will have several new I2C buses available for use, one for each channel of the multiplexer. You can verify the buses are available by going to the Config -> System Information page of Mycodo and viewing the I2C buses. If there's only one, there is an issue. If you see 9 buses (1 from the original bus + 8 new buses from the multiplexer), then everything is working and you can begin connecting devices to your multiplexer channels.
 
+## tested compatible product
 
+DFRobot DFR0576 PCA9548 Mux breakout - I have tested this board. Comes with a cable that can directly connect to the GPIO pins.  At the moment the board sells for US $6.90 which is less than most other breakouts that need alot of work to connect. This board can be up and working with your pi in less than 10 minutes, including installing the mux overlay. 
+[https://www.dfrobot.com/wiki/index.php/Gravity:_Digital_1-to-8_I2C_Multiplexer_SKU:DFR0576]  
 
