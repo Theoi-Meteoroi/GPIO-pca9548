@@ -23,7 +23,7 @@ echo
 echo
 #
 # Create the overlay file and put in /boot/overlays
-sudo dtc -I dts -O dtb -@ -o /boot/overlays/i2c_gpio-pca9548.dtbo ./i2c_gpio-pca9548.dts
+sudo dtc -W no-unit_address_vs_reg -I dts -O dtb -@ -o /boot/overlays/i2c_gpio-pca9548.dtbo ./i2c_gpio-pca9548.dts
 echo
 #
 # Put the required changes into /boot/config.txt
