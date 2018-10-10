@@ -148,7 +148,17 @@ dtoverlay=i2c_gpio-pca9548
 
 # Build your own or buy
 
-You will need to have your multiplexer connected with SDA on pin 23 and SCL on pin 24.  Use the +3.3v to power the pca9548.  Add a 10uf tantalum capacitor near the device if possible to provide for transient spikes. Remember to tie the /RESET pin to +3.3v either directly or through a pull-up resistor.  The GPIO lines also need a nominal pull-up to 3.3v. 4.7k ohm seems to work well.  Address lines should also be connected to GND or +3.3v, either directly or through a pull-up resistor (10k or so is fine.)
+You will need to have your multiplexer connected with SDA on pin 23 and SCL on pin 24.  Use the +3.3v to power the pca9548.  Add a 10uf tantalum capacitor near the device if possible to provide for transient spikes. Remember to tie the /RESET pin to +3.3v through a pull-up resistor.  The GPIO lines also need a nominal pull-up to 3.3v. 4.7k ohm seems to work well because the Pi pins are capable of sinking a max of 16mA, but be aware the SMbus specification for minimum sink current of 100µA, and a maximum of 350µA, compared to 3mA for the I²C bus.  This in turn would determine the lowest acceptable value of the pullup resistor, examples of which are shown in the table below.  This will matter for stability of the attached SMbus devices.
+
+##  Minimum Pullup Resistor Values per Bus Specifications
+	
+ |    | 3V VDD | 5V VDD |
+ |----|-----|------|
+ | I²C Bus | > 1k | > 1.6k |
+ | SMBus | > 8.5k | > 14k  |
+
+
+Address lines should also be connected to GND or +3.3v, either directly or through a pull-up resistor (10k or so is fine.)
 
 If you have it properly connected and powered, after rebooting you will have several new I2C buses available for use, one for each channel of the multiplexer. You can verify the buses are available by going to the Config -> System Information page of Mycodo and viewing the I2C buses. If there's only one, there is an issue. If you see 9 buses (1 from the original bus + 8 new buses from the multiplexer), then everything is working and you can begin connecting devices to your multiplexer channels.
 
