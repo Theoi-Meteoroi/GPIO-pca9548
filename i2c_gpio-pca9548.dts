@@ -1,10 +1,10 @@
-// GPIO I2C PCA9548 Mux overlay
+// GPIO I2C PCA9548 Mux overlay v2
 
 /dts-v1/;
 /plugin/;
 
 /{
-	compatible = "brcm,bcm2708";
+	compatible = "brcm,bcm2835";
 
 	fragment@0 {
 		target = <&i2c_gpio>;
@@ -65,5 +65,7 @@
 
 	__overrides__ {
 		addr = <&pca9548>,"reg:0";
+                bus = <&i2c_gpio>,"reg:0";
 	};
 };
+
