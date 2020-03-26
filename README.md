@@ -1,6 +1,6 @@
 # GPIO-pca9548
  
-### Note: -- This overlay currently does not work with the BUSTER release of Raspian --
+### Note: -- This overlay currently is experimental with the BUSTER release of Raspian --
 
 Adapt PCA9548 multiplexer overlay to GPIO I2C bus for Raspberry Pi. Tested most recently with Raspbian Stretch. This is most useful for devices that are SMbus compliant (<=100khz clock) or have fixed addresses that prevent using more than one on the same bus. This is also a good work-around on the Raspberry Pi for the clock-stretching bug that some devices (AM2315 for instance) misbehave with the clock artifacts from the hardware ARM I2c bus. Control the clock speed by modifying the delay ( i2c_gpio_delay_us ).  This software bus provides some additional SMbus support.
 
